@@ -42,7 +42,7 @@ camino_loop = 0
 new_camino = "AAA"
 no_encontrado = True
 
-while(no_encontrado):
+while no_encontrado :
     if camino_loop >= camino_max:
         camino_loop = 0
     go_to = diccionario[new_camino]
