@@ -8,10 +8,7 @@ def hash_code(char: str) -> int:
             num = (num*17)%256
     return num
 with open(file="AdventCode\Day15\input.txt") as file:
-    line = []
-    for linea in file:
-        line = linea.strip().split(",")
-
+    line = file.readline().split(",")
     boxes = {}
     for i in range(0, 256):
         boxes[i] = []
