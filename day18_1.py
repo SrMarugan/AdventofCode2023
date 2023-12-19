@@ -1,120 +1,17 @@
-# with open(file="AdventCode\Day18\input.txt") as file:
-#     lines = file.readlines()
-#     direction = []
-#     steps = []
-#     actual_pos = [0, 0]
-#     maxim_pos = [0, 0]
-#     minim_pos = [0, 0]
-#     for line in lines:
-#         line = line.split(" ")
+points = [(0, 0)]
+dirs = {"U": (-1, 0), "D": (1, 0), "L": (0, -1), "R": (0, 1)}
 
-#         match line[0]:
-#             case "R":
-#                 actual_pos[0] = actual_pos[0] + int(line[1])
-#                 if actual_pos[0] > maxim_pos[0]:
-#                     maxim_pos[0] = actual_pos[0]
-#             case "L":
-#                 actual_pos[0] = actual_pos[0] - int(line[1])
-#                 if actual_pos[0] < minim_pos[0]:
-#                     minim_pos[0] = actual_pos[0]
-#             case "U":
-#                 actual_pos[1] = actual_pos[1] + int(line[1])
-#                 if actual_pos[1] > maxim_pos[1]:
-#                     maxim_pos[1] = actual_pos[1]
-#             case "D":
-#                 actual_pos[1] = actual_pos[1] - int(line[1])
-#                 if actual_pos[1] < minim_pos[1]:
-#                     minim_pos[1] = actual_pos[1]
+b = 0
 
-#     max_x = maxim_pos[0]-minim_pos[0]+1
-#     max_y = maxim_pos[1]-minim_pos[1]+1
+for line in open(file="adventcalendar\Day18\input.txt"):
+    direccion, num, _ = line.split()
+    dr, dc = dirs[direccion]
+    num = int(num)
+    b += num
+    r, c = points[-1]
+    points.append((r + dr * num, c + dc * num))
 
-#     mapa = [["."]*(max_x)]*(max_y)
+A = abs(sum(points[i][0] * (points[i - 1][1] - points[(i + 1) % len(points)][1]) for i in range(len(points)))) // 2
+i = A - b // 2 + 1
 
-# with open(file="AdventCode\Day18\mapa3.txt", mode="x") as write_file:
-#     for value in mapa:
-#         line = "".join(value)
-#         write_file.write(line+"\n")
-
-# with open(file="AdventCode\Day18\mapa3.txt") as read_file:
-#     lines_2 = read_file.readlines()
-#     mapa = []
-#     for line_2 in lines_2:
-#         aux = list(line_2)
-#         aux.pop()
-#         mapa.append(aux)
-
-# with open(file="AdventCode\Day18\input.txt") as file:
-#     lines = file.readlines()
-#     actual_pos = [-int(minim_pos[0]), -int(minim_pos[1])]
-#     print(actual_pos)
-#     for line in lines:
-#         line = line.split(" ")
-#         match line[0]:
-#             case "R":
-#                 for _ in range(int(line[1])):
-#                     varaux = mapa[actual_pos[1]]
-#                     print(varaux, actual_pos)
-#                     if varaux[actual_pos[0]] == ".":
-#                         varaux[actual_pos[0]] = "#"
-#                     actual_pos[0] = actual_pos[0] + 1
-#             case "L":
-#                 for _ in range(int(line[1])):
-#                     varaux = mapa[actual_pos[1]]
-#                     print(varaux, actual_pos)
-#                     if varaux[actual_pos[0]] == ".":
-#                         varaux[actual_pos[0]] = "#"
-#                     actual_pos[0] = actual_pos[0] - 1
-#             case "U":
-#                 for _ in range(int(line[1])):
-#                     varaux = mapa[actual_pos[1]]
-#                     print(varaux, actual_pos)
-#                     if varaux[actual_pos[0]] == ".":
-#                         varaux[actual_pos[0]] = "#"
-#                     actual_pos[1] = actual_pos[1] + 1
-#             case "D":
-#                 for _ in range(int(line[1])):
-#                     varaux = mapa[actual_pos[1]]
-#                     print(varaux, actual_pos)
-#                     if varaux[actual_pos[0]] == ".":
-#                         varaux[actual_pos[0]] = "#"
-#                     actual_pos[1] = actual_pos[1] - 1
-
-# with open(file="AdventCode\Day18\mapa4.txt", mode="x") as write_file:
-#     for value in mapa:
-#         line = "".join(value)
-#         write_file.write(line+"\n")
-
-with open(file="AdventCode\Day18\mapa4.txt") as read_file:
-    lines_3 = read_file.readlines()
-    mapa = []
-    for line_3 in lines_3:
-        aux = list(line_3)
-        aux.pop()
-        mapa.append(aux)
-
-    for line_map in mapa:
-        draw = False
-        for index, ch in enumerate(line_map):
-            if index < len(line_map)-1:
-                siguiente = line_map[index+1]
-            else:
-                siguiente = "E"
-
-            if ch == "#" and siguiente == ".":
-                if draw:
-                    draw = False
-                else:
-                    draw = True
-            if ch == "." and draw:
-                line_map[index] = "#"
-
-with open(file="AdventCode\Day18\mapa5.txt", mode="x") as write_file:
-    for value in mapa:
-        line = "".join(value)
-        write_file.write(line+"\n")
-
-    # for i in range(maxim_pos[0]-minim_pos[0]):
-    #     for j in range(maxim_pos[1]-minim_pos[1]):
-    #         mapa[i][j] = "."
-    # print(maxim_pos, minim_pos)
+print(i + b)
